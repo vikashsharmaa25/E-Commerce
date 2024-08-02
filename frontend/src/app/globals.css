@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0;
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+}
+
+.swiper-button-prev {
+  left: 0;
+}
+
+.swiper-button-next {
+  right: 0;
+}
+
+/* Hide the default Swiper arrow icons */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
