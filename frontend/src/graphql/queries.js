@@ -7,18 +7,20 @@ export const GET_ALL_PRODUCTS = gql`
         id
         attributes {
           title
-          description
           price
-          slug
-          createdAt
           quantity_availbale
-          publishedAt
           FeaturedProduct
           media {
             data {
-              id
               attributes {
                 url
+              }
+            }
+          }
+          category {
+            data {
+              attributes {
+                name
               }
             }
           }

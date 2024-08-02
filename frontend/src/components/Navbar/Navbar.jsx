@@ -3,11 +3,19 @@ import Link from "next/link";
 import React, { useState } from "react";
 import {
   FaSearch,
-  FaHeart,
   FaShoppingCart,
   FaBars,
   FaTimes,
+  FaUser,
 } from "react-icons/fa";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,14 +64,6 @@ const Navbar = () => {
               About
             </Link>
           </li>
-          <li className="text-center md:text-left">
-            <Link
-              href="#"
-              className="block py-2 px-4 text-black hover:text-purple-500"
-            >
-              Sign Up
-            </Link>
-          </li>
         </ul>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -73,7 +73,20 @@ const Navbar = () => {
             className="bg-gray-100 border border-gray-300 rounded-md py-1 px-3 outline-none focus:border-purple-500 transition"
           />
           <FaSearch className="text-gray-600 cursor-pointer" />
-          <FaHeart className="text-gray-600 cursor-pointer" />
+          <Dialog>
+            <DialogTrigger>
+              <FaUser className="text-gray-600 cursor-pointer" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           <FaShoppingCart className="text-gray-600 cursor-pointer" />
         </div>
       </div>

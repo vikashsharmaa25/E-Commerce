@@ -1,27 +1,58 @@
 "use client";
-import React, { useState } from "react";
+
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import {
-  FaMobileAlt,
-  FaDesktop,
-  FaCamera,
-  FaHeadphones,
+  FaShoppingBag,
+  FaTshirt,
+  FaLaptop,
+  FaCouch,
+  FaSprayCan,
+  FaHeartbeat,
+  FaBook,
   FaGamepad,
+  FaCar,
+  FaFootballBall,
+  FaAppleAlt,
 } from "react-icons/fa";
-import { IoWatch } from "react-icons/io5";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_CATEGORY } from "@/graphql/categoryQueries";
 
-const categories = [
-  { name: "Phones", icon: FaMobileAlt },
-  { name: "Computers", icon: FaDesktop },
-  { name: "SmartWatch", icon: IoWatch },
-  { name: "Camera", icon: FaCamera },
-  { name: "HeadPhones", icon: FaHeadphones },
-  { name: "Gaming", icon: FaGamepad },
-];
+const getCategoryIcon = (categoryName) => {
+  switch (categoryName) {
+    case "Fashion & Apparel":
+      return FaTshirt;
+    case "Electronics":
+      return FaLaptop;
+    case "Home & Living":
+      return FaCouch;
+    case "Beauty & Personal Care":
+      return FaSprayCan;
+    case "Health & Wellness":
+      return FaHeartbeat;
+    case "Books, Music & Movies":
+      return FaBook;
+    case "Toys & Games":
+      return FaGamepad;
+    case "Automotive":
+      return FaCar;
+    case "Sports & Outdoors":
+      return FaFootballBall;
+    case "Groceries & Food":
+      return FaAppleAlt;
+    default:
+      return FaShoppingBag;
+  }
+};
 
-const BrowseByCategory = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
+const BrowseByCategory = ({ selectedCategory, onCategoryChange }) => {
+  const { loading, error, data } = useQuery(GET_ALL_CATEGORY);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const categories = data?.categories?.data || [];
 
   return (
     <div className="container mx-auto mt-10">
@@ -40,21 +71,26 @@ const BrowseByCategory = () => {
           1024: { slidesPerView: 6 },
         }}
       >
-        {categories.map((category, index) => (
-          <SwiperSlide key={index}>
-            <div
-              className={`p-4 border rounded-lg flex flex-col items-center justify-center h-32 cursor-pointer transition-colors ${
-                category.name === selectedCategory
-                  ? "bg-red-500 text-white"
-                  : "hover:bg-gray-100"
-              }`}
-              onClick={() => setSelectedCategory(category.name)}
-            >
-              <category.icon className="text-3xl mb-2" />
-              <span className="text-sm">{category.name}</span>
-            </div>
-          </SwiperSlide>
-        ))}
+        {categories.map((category) => {
+          const IconComponent = getCategoryIcon(category?.attributes?.name);
+          return (
+            <SwiperSlide key={category.id}>
+              <div
+                className={`p-4 border rounded-lg flex flex-col items-center justify-center h-32 cursor-pointer transition-colors ${
+                  category.attributes.name === selectedCategory
+                    ? "bg-red-500 text-white"
+                    : "hover:bg-gray-100"
+                }`}
+                onClick={() => onCategoryChange(category?.attributes?.name)}
+              >
+                <IconComponent className="text-3xl mb-2" />
+                <span className="text-sm text-center">
+                  {category.attributes.name}
+                </span>
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );
