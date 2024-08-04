@@ -10,10 +10,12 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useRouter } from "next/navigation";
 
 const ExploreProducts = ({ selectedCategory }) => {
   const [visibleProducts, setVisibleProducts] = useState(8);
   const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
+  const router = useRouter();
 
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Error: {error.message}</h1>;
@@ -26,8 +28,14 @@ const ExploreProducts = ({ selectedCategory }) => {
       )
     : allProducts;
 
+  console.log("allProducts", allProducts);
+
   const handleViewAll = () => {
     setVisibleProducts(products.length);
+  };
+
+  const handleProductClick = (productId) => {
+    router.push(`/product/${productId}`);
   };
 
   const renderStars = (rating) => {
@@ -45,13 +53,15 @@ const ExploreProducts = ({ selectedCategory }) => {
 
   return (
     <>
-      <div className="container mx-auto mt-10">
+      <div className="mt-10">
         <div className="mb-6">
           <span className="bg-red-500 text-white px-2 py-1 rounded-md text-sm">
             Our Products
           </span>
         </div>
-        <h2 className="text-3xl font-bold mb-6">Explore Our Products</h2>
+        <h2 className="sm:text-3xl text-lg font-bold mb-6">
+          Explore Our Products
+        </h2>
 
         {products.length === 0 ? (
           <div className="text-center text-gray-500 text-lg py-10">
@@ -106,8 +116,11 @@ const ExploreProducts = ({ selectedCategory }) => {
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">
-                    {product.attributes.title}
+                  <h3
+                    onClick={() => handleProductClick(product?.id)}
+                    className="font-semibold text-lg mb-2 line-clamp-2 cursor-pointer"
+                  >
+                    {product?.attributes?.title}
                   </h3>
                   <div className="flex items-center mb-2">
                     <span className="text-red-500 font-bold">
@@ -116,7 +129,7 @@ const ExploreProducts = ({ selectedCategory }) => {
                     <div className="ml-2 flex items-center">
                       {renderStars(4)}
                       <span className="text-gray-500 text-sm ml-1">
-                        ({product.attributes.quantity_availbale})
+                        ({product?.attributes?.quantity_availbale})
                       </span>
                     </div>
                   </div>

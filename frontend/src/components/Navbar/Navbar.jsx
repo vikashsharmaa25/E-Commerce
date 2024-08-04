@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import AuthMain from "../Auth/AuthMain";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,9 @@ const Navbar = () => {
     <nav className="bg-white">
       <div className="max-w-[1450px] mx-auto flex justify-between items-center p-6">
         <div className="flex items-center">
-          <h1 className="text-2xl font-bold text-black">Exclusive</h1>
+          <Link href={"/"} className="text-2xl font-bold text-black">
+            Paisa Vasool
+          </Link>
         </div>
 
         <div className="md:hidden" onClick={toggleMenu}>
@@ -78,13 +81,7 @@ const Navbar = () => {
               <FaUser className="text-gray-600 cursor-pointer" />
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                <DialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </DialogDescription>
-              </DialogHeader>
+              <AuthMain />
             </DialogContent>
           </Dialog>
           <FaShoppingCart className="text-gray-600 cursor-pointer" />

@@ -55,13 +55,13 @@ const BrowseByCategory = ({ selectedCategory, onCategoryChange }) => {
   const categories = data?.categories?.data || [];
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="mt-10">
       <div className="mb-6">
-        <span className="bg-red-500 text-white px-2 py-1 rounded-md text-sm">
+        <span className="bg-red-500 text-white py-1 rounded-md text-sm">
           Categories
         </span>
       </div>
-      <h2 className="text-3xl font-bold mb-6">Browse By Category</h2>
+      <h2 className="sm:text-3xl text-lg font-bold mb-6">Browse By Category</h2>
       <Swiper
         spaceBetween={20}
         slidesPerView={1}
@@ -76,7 +76,7 @@ const BrowseByCategory = ({ selectedCategory, onCategoryChange }) => {
           return (
             <SwiperSlide key={category.id}>
               <div
-                className={`p-4 border rounded-lg flex flex-col items-center justify-center h-32 cursor-pointer transition-colors ${
+                className={`border rounded-lg flex flex-col items-center justify-center h-32 cursor-pointer transition-colors ${
                   category.attributes.name === selectedCategory
                     ? "bg-red-500 text-white"
                     : "hover:bg-gray-100"
