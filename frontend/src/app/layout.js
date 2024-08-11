@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import ApolloWrapper from "@/ApolloWrapper/ApolloWrapper";
+import { CartProvider } from "@/components/Cart/useCart";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +17,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ApolloWrapper>
-          <Navbar />
-          {children}
-          <Footer />
-        </ApolloWrapper>
+        <CartProvider>
+          <ApolloWrapper>
+            <Navbar />
+            {children}
+            <Toaster />
+            <Footer />
+          </ApolloWrapper>
+        </CartProvider>
       </body>
     </html>
   );

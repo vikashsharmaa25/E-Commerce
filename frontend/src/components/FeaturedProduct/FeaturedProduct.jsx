@@ -8,9 +8,12 @@ import Image from "next/image";
 import { FaHeart, FaEye } from "react-icons/fa";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "@/graphql/queries";
+import { useCart } from "../Cart/useCart";
+import { toast } from "sonner";
 
 const FeaturedProduct = () => {
   const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
+  const { addToCart } = useCart();
 
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Error: {error.message}</h1>;
@@ -19,6 +22,17 @@ const FeaturedProduct = () => {
     data?.products?.data.filter(
       (product) => product.attributes.FeaturedProduct
     ) || [];
+
+  const handleAddToCart = (product) => {
+    addToCart({
+      id: product.id,
+      title: product.attributes.title,
+      price: product.attributes.price,
+      image: product.attributes.media.data[0].attributes.url,
+      quantity: 1,
+    });
+    toast("Product added to cart successfully");
+  };
 
   return (
     <div className="bg-white rounded-lg mt-10">
@@ -52,7 +66,10 @@ const FeaturedProduct = () => {
                   ₹{product.attributes.price}
                 </span>
               </div>
-              <button className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300">
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300"
+              >
                 Add To Cart
               </button>
             </div>

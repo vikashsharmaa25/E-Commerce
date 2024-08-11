@@ -11,10 +11,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useRouter } from "next/navigation";
+import { useCart } from "../Cart/useCart";
+import { toast } from "sonner";
 
 const ExploreProducts = ({ selectedCategory }) => {
   const [visibleProducts, setVisibleProducts] = useState(8);
   const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
+  const { addToCart } = useCart();
   const router = useRouter();
 
   if (loading) return <h1>Loading...</h1>;
@@ -49,6 +52,17 @@ const ExploreProducts = ({ selectedCategory }) => {
         ★
       </span>
     ));
+  };
+
+  const handleAddToCart = (product) => {
+    addToCart({
+      id: product.id,
+      title: product.attributes.title,
+      price: product.attributes.price,
+      image: product.attributes.media.data[0].attributes.url,
+      quantity: 1,
+    });
+    toast("Product added to cart successfully");
   };
 
   return (
@@ -133,7 +147,10 @@ const ExploreProducts = ({ selectedCategory }) => {
                       </span>
                     </div>
                   </div>
-                  <button className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300">
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-300"
+                  >
                     Add To Cart
                   </button>
                 </div>

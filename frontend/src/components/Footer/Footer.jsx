@@ -79,18 +79,13 @@ const Footer = () => {
             <div className="flex space-x-4 mb-4">
               <div className="w-24 h-24 bg-gray-800"></div>
               <div className="space-y-2">
-                <Image
-                  src="/path-to-google-play.png"
-                  alt="Google Play"
-                  width={120}
-                  height={40}
-                />
-                <Image
+                {/* <Image src="" alt="Google Play" width={120} height={40} /> */}
+                {/* <Image
                   src="/path-to-app-store.png"
                   alt="App Store"
                   width={120}
                   height={40}
-                />
+                /> */}
               </div>
             </div>
             <div className="flex space-x-4">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BrowseByCategory from "@/components/BrowseByCategory/BrowseByCategory";
 import ExploreProducts from "@/components/ExploreProducts/ExploreProducts";
 import FeaturedProduct from "@/components/FeaturedProduct/FeaturedProduct";
